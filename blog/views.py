@@ -6,7 +6,7 @@ from .forms import SignUpForm, LoginForm
 from django.contrib import messages
 from .models import Post
 from .forms import PostForm
-from django.urls import reverse
+from django.contrib.auth.models import Group
 
 
 # Create your views here.
@@ -27,16 +27,24 @@ def dashboard(request):
     else:
         return HttpResponseRedirect('/login/')
       
+
+# SIGNUP VIEW
 def signup(request):    
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             messages.success(request, 'Successfully Signed Up!')
-            form.save()
+            user = form.save()
+            group = Group.objects.get(name='Author')
+            # user = form.cleaned_data.get('username')
+            user.groups.add(group)
+            # return HttpResponseRedirect('/login/')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+
+# USER LOGIN VIEW
 def user_login(request):
     if not request.user.is_authenticated:
         if request.method == "POST":
@@ -84,16 +92,15 @@ def createpost(request):
 def updatepost(request, id):
     if request.user.is_authenticated:
         if request.method == "POST":
-            form = PostForm(request.POST, request.FILES)
-            if form.is_valid():
-                try:
-                    form.save()
-                    messages.success(request, 'Successfully Updated!')
-                    return HttpResponseRedirect('/dashboard/')
-                except:
-                    messages.error(request, 'Failed to Update!')
-        else:
-            form = PostForm(instance=get)
+           pi = Post.objects.get(pk=id)
+           form = PostForm(request.POST, instance=pi)
+           if form.is_valid():
+                form.save()
+                messages.success(request, 'Successfully Updated!')
+                return HttpResponseRedirect('/dashboard/')
+        else:   
+            pi = Post.objects.get(pk=id)
+            form = PostForm(instance=pi)
         return render(request, 'updatepost.html', {'form': form})
     else:
         return HttpResponseRedirect('/login/')

@@ -3,8 +3,13 @@
 {% block title %}Update Post Page{% endblock title %}
 
 {% block content %}
-    <div class="col-sm-12">
-        <h1 class="my-5">Update Post Page</h1>
-        
-    </div>
+<div class="col-sm-12">
+    <h1 class="my-5">Update Post Page</h1>
+    <form class="my-5" action="" method="post" novalidate>
+        {% csrf_token %}
+        {{form.as_p}}
+        <a href="{% url 'dashboard' %}" class="btn btn-danger">Back to Dashboard</a>
+        <button type="submit" class="btn btn-success">Update Post</button>
+    </form>
+</div>
 {% endblock content %}

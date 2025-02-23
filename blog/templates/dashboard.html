@@ -47,11 +47,17 @@
                     <td>{{post.created_at}}</td>
                     {% comment %} <td>{{post.updated_at}}</td> {% endcomment %}
                     <td class="text-center inline">
-                        <a href="{% url 'updatepost' post.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        {% comment %} <a href="{% url 'updatepost' post.id %}" class="btn btn-warning btn-sm">Edit</a> {% endcomment %}
+                        <form action="{% url 'updatepost' post.id %}" method="get" class="d-inline">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-warning btn-sm" value="Edit">
+                        </form>
+                        {% if perms.blog.delete_post %}
                         <form action="{% url 'deletepost' post.id %}" method="post" class="d-inline">
                             {% csrf_token %}
                             <input type="submit" class="btn btn-danger btn-sm" value="Delete">
                         </form>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

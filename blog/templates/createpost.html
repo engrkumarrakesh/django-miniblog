@@ -5,6 +5,11 @@
 {% block content %}
     <div class="col-sm-12">
         <h1 class="my-5">Create Post Page</h1>
-        
+        <form class="my-5" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <a href="{% url 'dashboard' %}" class="btn btn-danger">Back to Dashboard</a>
+            <button type="submit" class="btn btn-success">Create Post</button>
+        </form>
     </div>
 {% endblock content %}
