@@ -1,8 +1,12 @@
-body{
+/* body{
     background-color: #212529;
     color: #ffffff;
 }
 
 .jambo-color{
     background-color: rgb(83,81,81);
+} */
+
+.jumbotron{
+    padding: 2rem 1rem !important;
 }

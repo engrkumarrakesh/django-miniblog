@@ -1,0 +1,32 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block title %}Signup Page{% endblock title %}
+
+{% block content %}
+    <div class="col-sm-5">
+        <h1 class="my-5">Signup Page</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <p {% if message.tags %} class="alert text-{{message.tags}}" {% endif %}>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {% for fm in form %}
+                <div class="form-group">
+                    {{fm.label_tag}} {{fm}}
+                    <small class="text-danger">{{fm.errors|striptags}}</small>
+                </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-primary" value="Signup Now">
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class="alert text-danger my-2">{{error}}</p>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+    <div class="col-sm-7 my-5">
+        <image width="100%" src="{% static 'images/auth/whyedumaq.png' %}" alt="auth">
+    </div>
+{% endblock content %}

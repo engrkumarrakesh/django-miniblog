@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome To MiniBlog</title>
+    <title>{% block title %}Welcome To MiniBlog{% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="container-fluid bg-dark text-white">
+    <div class="container-fluid">
         {% include 'layout/navbar.html' %}
     </div>
 
