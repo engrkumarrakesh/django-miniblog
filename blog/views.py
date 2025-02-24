@@ -1,10 +1,10 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 # from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, LoginForm
 from django.contrib import messages
-from .models import Post
+from .models import Post , Contact
 from .forms import PostForm
 from django.contrib.auth.models import Group
 
@@ -18,7 +18,20 @@ def about(request):
     return render(request, 'about.html')
 
 def contact(request):
+    if request.method == "POST":
+        fname=request.POST['fname']
+        lname=request.POST['lname']
+        mobile=request.POST['mobile']
+        email=request.POST['email']
+        address=request.POST['address'] 
+        message=request.POST['message'] 
+        contact=Contact(first_name=fname, last_name=lname, mobile=mobile, address=address, email=email, message=message)
+        if contact.first_name and contact.last_name and contact.mobile and contact.email and contact.address and contact.message:
+            contact.save()
+            messages.success(request, 'Enquiry Successfully Sent!')
     return render(request, 'contact.html')
+
+
 
 def dashboard(request):
     if request.user.is_authenticated:
@@ -119,3 +132,20 @@ def deletepost(request, id):
                 return HttpResponseRedirect('/dashboard/')
     else:
         return HttpResponseRedirect('/login/')
+
+# CONTACT PAGE
+# def contact(request):
+#     if request.method == "POST":
+#         form = ContactForm(request.POST)
+#         if form.is_valid():
+#             try:
+#                 form.save()
+#                 messages.success(request, 'Successfully Submitted!')
+#                 return HttpResponseRedirect('/contact/')
+#             except:
+#                 messages.error(request, 'Failed to Submit!')
+#         else:
+#             messages.error(request, 'Form is invalid!')
+#     else:
+#         form = ContactForm()
+#     return render(request, 'contact.html', {'form': form})

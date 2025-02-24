@@ -12,3 +12,14 @@ class Post(models.Model):
 
     # def __str__(self):
     #     return self.title
+
+class Contact(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=12)
+    address = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+  
