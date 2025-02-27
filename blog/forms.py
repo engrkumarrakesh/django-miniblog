@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext, gettext_lazy as _
 from .models import Post
 from django.core.validators import FileExtensionValidator
+from django_ckeditor_5.widgets import CKEditor5Widget
+
 
 class SignUpForm(UserCreationForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
@@ -43,6 +45,9 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(label=_("Password"), strip=False, widget=forms.PasswordInput(attrs={'class':'form-control', 'autocomplete':'current-password'}))
 
 class PostForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+          super().__init__(*args, **kwargs)
+          self.fields["description"].required = False
     class Meta:
         model = Post
         fields = ['title', 'subtitle', 'author', 'description', 'image']
@@ -53,6 +58,7 @@ class PostForm(forms.ModelForm):
             'author': forms.TextInput(attrs={'class':'form-control'}),
             'description': forms.Textarea(attrs={'class':'form-control'}),
             'image': forms.FileInput(attrs={'class':'form-control'}),
+            "description": CKEditor5Widget(attrs={"class": "django_ckeditor_5"}, config_name="extends")
         }   
 
 # class ContactForm(forms.ModelForm):

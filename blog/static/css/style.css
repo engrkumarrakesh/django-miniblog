@@ -10,3 +10,10 @@
 .jumbotron{
     padding: 2rem 1rem !important;
 }
+
+/* # CKEDITOR style */
+.ck-editor__editable_inline:not(.ck-comment__input *) {
+    height: 300px;
+    overflow-y: auto;
+}
+

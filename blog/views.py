@@ -7,12 +7,17 @@ from django.contrib import messages
 from .models import Post , Contact
 from .forms import PostForm
 from django.contrib.auth.models import Group
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 def home(request):
-    post = Post.objects.all()
-    return render(request, 'home.html',{'post':post})
+    post = Post.objects.all().order_by('id')
+    paginator = Paginator(post, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'home.html',{'page_obj':page_obj})
 
 def about(request):
     return render(request, 'about.html')
@@ -149,3 +154,9 @@ def deletepost(request, id):
 #     else:
 #         form = ContactForm()
 #     return render(request, 'contact.html', {'form': form})
+
+# Post Details Page
+def postdetails(request, id):
+    if request.user.is_authenticated:
+        post = Post.objects.get(id=id)
+    return render(request, 'postdetails.html',{'post':post})

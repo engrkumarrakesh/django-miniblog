@@ -1,0 +1,23 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block title %}Post Details Page{% endblock title %}
+
+{% block content %}
+    <div class="col-sm-12">
+        {% comment %} <h1 class="my-5">Post Details Page</h1> {% endcomment %}
+        <div class="jumbotron jumbotron-fluid jambo-color">
+            <div class="container">
+              <h2 class="display-4 font-weight-bold text-danger">{{post.title}}</h2>
+              <h4>{{post.subtitle}}</h4>
+                <img style="width: 100%;height: 100%;object-fit: cover;" src="{{post.image.url}}" alt="post image">
+                <p class="lead">{{post.description}}</p>
+              <p style="font-weight: bold;" class="lead">Author: {{post.author}} </p>
+              <p class="lead">Created At: {{post.created_at}} </p>
+              <p class="lead">Updated At: {{post.updated_at}} </p>
+              <p class="lead">
+                <a class="btn btn-primary btn-sm" href="#" role="button">Like</a>
+                <a class="btn btn-primary btn-sm" href="#" role="button">Dislike</a>
+            </div>
+          </div>
+    </div>
+{% endblock content %}

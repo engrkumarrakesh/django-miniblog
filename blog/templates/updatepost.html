@@ -5,6 +5,7 @@
 {% block content %}
 <div class="col-sm-12">
     <h1 class="my-5">Update Post Page</h1>
+    {{ form.media }} # Required for styling/js to make ckeditor5 work
     <form class="my-5" action="" method="post" novalidate>
         {% csrf_token %}
         {{form.as_p}}
